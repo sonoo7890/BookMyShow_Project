@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BookMyShow</title>
+</head>
+<body>
+
+<h1>Welcome to the BookMyShow App!</h1>
+
+<h2>Available Movies</h2>
+
+{% for movie in movies %}
+    <div>
+        <h3>{{ movie.title }}</h3>
+        <p>{{ movie.description }}</p>
+        <p>Release Date: {{ movie.release_date }}</p>
+        <hr>
+    </div>
+{% empty %}
+    <p>No movies available.</p>
+{% endfor %}
+
+</body>
+</html>
