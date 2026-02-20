@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BookMyShow</title>
+</head>
+<body>
+
+<h1>Available Shows 🎬</h1>
+
+{% for show in shows %}
+    <div style="border:1px solid black; padding:10px; margin:10px;">
+        <h2>{{ show.movie.title }}</h2>
+        <p>{{ show.movie.description }}</p>
+        <p>Price: ₹{{ show.price }}</p>
+        <img src="{{ show.movie.image.url }}" width="200">
+    </div>
+{% empty %}
+    <p>No shows available.</p>
+{% endfor %}
+
+</body>
+</html>
