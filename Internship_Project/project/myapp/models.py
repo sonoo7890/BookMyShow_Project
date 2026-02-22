@@ -28,6 +28,9 @@ class Show(models.Model):
     total_seats = models.IntegerField()
     available_seats = models.IntegerField()
 
+    def __str__(self):
+        return f"{self.movie.title} - {self.show_time}"
+
 
 class Booking(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)

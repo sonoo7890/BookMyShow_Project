@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Bookings</title>
+</head>
+<body>
+    {% if messages %}
+    {% for message in messages %}
+        <div id="success-message" style="
+            background-color:#d4edda;
+            color:#155724;
+            padding:10px;
+            margin:10px 0;
+            border-radius:5px;">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+<h2>My Bookings 🎟</h2>
+
+{% if bookings %}
+    {% for booking in bookings %}
+        <hr>
+        <p><strong>Movie:</strong> {{ booking.show.movie.title }}</p>
+        <p><strong>Time:</strong> {{ booking.show.show_time }}</p>
+        <p><strong>Seats:</strong> {{ booking.seats_booked }}</p>
+        <p><strong>Total Paid:</strong> ₹{{ booking.total_amount }}</p>
+
+        <form action="{% url 'cancel_booking' booking.id %}" method="post">
+        {% csrf_token %}
+        <button type="submit"
+            onclick="return confirm('Are you sure you want to cancel this booking?')" 
+            style="background:red;color:white;padding:5px 10px;border:none;border-radius:5px;">
+            Cancel Booking
+        </button>
+        </form>
+
+    {% endfor %}
+{% else %}
+    <p>No bookings yet.</p>
+{% endif %}
+
+<script>
+    setTimeout(function() {
+        var msg = document.getElementById("success-message");
+        if (msg) {
+            msg.style.display = "none";
+        }
+    }, 3000);
+</script>
+
+</body>
+</html>

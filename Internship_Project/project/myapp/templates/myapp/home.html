@@ -5,18 +5,50 @@
 </head>
 <body>
 
-<h1>Available Shows 🎬</h1>
+<a href="{% url 'my_bookings' %}">My Bookings</a>
 
-{% for show in shows %}
+{% if messages %}
+    {% for message in messages %}
+        <div id="success-message" style="
+            background-color:#d4edda;
+            color:#155724;
+            padding:10px;
+            margin:10px 0;
+            border-radius:5px;">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+{% for movie in movies %}
     <div style="border:1px solid black; padding:10px; margin:10px;">
-        <h2>{{ show.movie.title }}</h2>
-        <p>{{ show.movie.description }}</p>
-        <p>Price: ₹{{ show.price }}</p>
-        <img src="{{ show.movie.image.url }}" width="200">
+        
+        <h2>{{ movie.title }}</h2>
+        <p>{{ movie.description }}</p>
+        <img src="{{ movie.image.url }}" width="200">
+
+        <h4>Show Times:</h4>
+
+        {% for show in movie.show_set.all %}
+            <a href="{% url 'show_detail' show.id %}"><br> <br>
+    {{ show.show_time }}- ₹{{ show.price }}
+     </a>
+
+        {% empty %}
+            <p>No shows available</p>
+        {% endfor %}
+
     </div>
-{% empty %}
-    <p>No shows available.</p>
 {% endfor %}
+
+<script>
+    setTimeout(function() {
+        var msg = document.getElementById("success-message");
+        if (msg) {
+            msg.style.display = "none";
+        }
+    }, 3000);  // 3000 milliseconds = 3 seconds
+</script>
 
 </body>
 </html>
