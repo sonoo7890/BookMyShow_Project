@@ -64,6 +64,7 @@ def cancel_booking(request, booking_id):
 
 def admin_check(user):
     return user.is_staff
+@login_required
 @user_passes_test(admin_check)
 
 def add_movie(request):
