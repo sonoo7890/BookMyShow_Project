@@ -7,6 +7,7 @@ from.models import Movie
 from django.contrib.auth.decorators import login_required
 from .models import Booking
 from django.contrib.auth.decorators import user_passes_test
+from django.core.exceptions import PermissionDenied
 # Create your views here.
 
 def home(request):
@@ -63,9 +64,11 @@ def cancel_booking(request, booking_id):
     return redirect("my_bookings")
 
 def admin_check(user):
-    return user.is_staff
+    if not user.is_staff:
+        raise PermissionDenied
+    return True
 @login_required
 @user_passes_test(admin_check)
 
 def add_movie(request):
-    return render(request, "myapp/add_movie.html")
+   return render(request, "myapp/add_movie.html")
