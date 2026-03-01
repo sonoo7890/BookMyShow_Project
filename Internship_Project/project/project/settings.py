@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'myapp',
+    'myapp.apps.MyappConfig',
 ]
 
 MIDDLEWARE = [
@@ -115,13 +115,48 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-STATIC_URL = 'static/'
-AUTH_USER_MODEL = 'myapp.CustomUser'
+# DEBUG=False
+# ALLOWED_HOSTS=['*']
 
+# STATIC_URL = 'static/'
+# STATICFILES_DIRS = [BASE_DIR / 'static',]
+# AUTH_USER_MODEL = 'myapp.CustomUser'
+
+# import os
+
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT=BASE_DIR / 'media'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# LOGIN_URL = 'login'
+# LOGOUT_URL = 'logout'
+
+# LOGIN_REDIRECT_URL = 'home'
+# LOGOUT_REDIRECT_URL = 'login'
+
+from pathlib import Path
 import os
 
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+DEBUG = False
+ALLOWED_HOSTS = ['*']
+
+# ✅ STATIC FILES (FIXED)
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+]
+
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# ✅ MEDIA FILES (cleaned)
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = BASE_DIR / 'media'
+
+# ✅ AUTH
+AUTH_USER_MODEL = 'myapp.CustomUser'
 
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'

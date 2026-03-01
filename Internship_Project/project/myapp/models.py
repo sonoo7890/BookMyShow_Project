@@ -19,23 +19,34 @@ class Movie(models.Model):
 
     def __str__(self):
         return self.title
+    
 
 
 class Show(models.Model):
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
     show_time = models.DateTimeField()
     price = models.IntegerField( )
-    total_seats = models.IntegerField()
-    available_seats = models.IntegerField()
+    # total_seats = models.IntegerField()
+    # available_seats = models.IntegerField()
 
     def __str__(self):
         return f"{self.movie.title} - {self.show_time}"
+    
+class Seat(models.Model):
+    show = models.ForeignKey(Show, on_delete=models.CASCADE)
+    seat_number = models.CharField(max_length=10)
+    is_booked = models.BooleanField(default=False)
 
+    def __str__(self):
+        return f"{self.show} - Seat {self.seat_number}"
 
 class Booking(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     show = models.ForeignKey(Show, on_delete=models.CASCADE)
-    seats_booked = models.IntegerField()
+    seats = models.ManyToManyField(Seat)
     booking_date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.show} "
 
     
