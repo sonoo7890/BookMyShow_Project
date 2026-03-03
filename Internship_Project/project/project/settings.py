@@ -134,29 +134,21 @@ USE_TZ = True
 # LOGIN_REDIRECT_URL = 'home'
 # LOGOUT_REDIRECT_URL = 'login'
 
-from pathlib import Path
-import os
+DEBUG = True
+ALLOWED_HOSTS=['*']
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+STATIC_URL = '/static/'   # ✅ yaha bas slash add karo
 
-DEBUG = False
-ALLOWED_HOSTS = ['*']
-
-# ✅ STATIC FILES (FIXED)
-STATIC_URL = '/static/'
-
-STATICFILES_DIRS = [
-    BASE_DIR / 'static',
-]
+STATICFILES_DIRS = [BASE_DIR / 'static',]
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# ✅ MEDIA FILES (cleaned)
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
-
-# ✅ AUTH
 AUTH_USER_MODEL = 'myapp.CustomUser'
+
+import os
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'   # ✅ ek hi line rakho (duplicate hata do)
 
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
