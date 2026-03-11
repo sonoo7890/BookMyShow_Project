@@ -26,9 +26,9 @@ class Show(models.Model):
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
     show_time = models.DateTimeField()
     price = models.IntegerField( )
-    # total_seats = models.IntegerField()
-    # available_seats = models.IntegerField()
-
+    total_seats = models.IntegerField()
+    # available_seats = models.IntegerField(default=0)
+   
     def __str__(self):
         return f"{self.movie.title} - {self.show_time}"
     

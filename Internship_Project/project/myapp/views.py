@@ -24,6 +24,7 @@ def show_detail(request, show_id):
         if seats_requested <= show.available_seats:
             total_amount = seats_requested * show.price
             show.available_seats -= seats_requested
+            
             show.save()
 
             # booking record create
@@ -51,6 +52,7 @@ def my_bookings(request):
         booking.total_amount = booking.seats_booked * booking.show.price
     return render(request, "myapp/my_bookings.html", {"bookings": bookings})
 
+
 @login_required
 def cancel_booking(request, booking_id):
     booking = get_object_or_404(Booking, id=booking_id, user=request.user)
@@ -62,6 +64,8 @@ def cancel_booking(request, booking_id):
     booking.delete()
     messages.success(request, "Booking cancelled successfully.")
     return redirect("my_bookings")
+
+
 
 def admin_check(user):
     if not user.is_staff:
