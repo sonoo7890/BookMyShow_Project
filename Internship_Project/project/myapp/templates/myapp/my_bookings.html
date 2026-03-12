@@ -24,7 +24,12 @@
         <hr>
         <p><strong>Movie:</strong> {{ booking.show.movie.title }}</p>
         <p><strong>Time:</strong> {{ booking.show.show_time }}</p>
-        <p><strong>Seats:</strong> {{ booking.seats_booked }}</p>
+        <!-- <p><strong>Seats:</strong> {{ booking.seats_booked }}</p> -->
+         <p><strong>Seats:</strong>
+                {% for seat in booking.seats.all %}
+                {{ seat.seat_number }}{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+        </p>
         <p><strong>Total Paid:</strong> ₹{{ booking.total_amount }}</p>
 
         <form action="{% url 'cancel_booking' booking.id %}" method="post">
@@ -40,6 +45,12 @@
 {% else %}
     <p>No bookings yet.</p>
 {% endif %}
+
+<!-- Seats:
+{% for seat in booking.seats.all %}
+{{ seat.seat_number }}{% if not forloop.last %}, {% endif %}
+{% endfor %}
+</p> -->
 
 <script>
     setTimeout(function() {
