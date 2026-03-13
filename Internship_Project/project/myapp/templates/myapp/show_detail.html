@@ -1,25 +1,147 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Show Detail</title>
+<title>Show Detail</title>
+
+<style>
+
+.seat{
+width:40px;
+height:40px;
+line-height:40px;
+text-align:center;
+margin:5px;
+border-radius:5px;
+display:inline-block;
+}
+
+.available{
+background:lightgreen;
+cursor:pointer;
+}
+
+.booked{
+background:red;
+color:white;
+}
+
+.selected{
+background:blue;
+color:white;
+}
+
+.seat-checkbox{
+display:none;
+}
+
+.seat-label{
+display:inline-block;
+}
+
+.screen{
+width:400px;
+height:20px;
+background:gray;
+margin:10px auto;
+border-radius:5px;
+}
+
+</style>
+
 </head>
+
 <body>
 
 <h2>{{ show.movie.title }}</h2>
+
 <p>Time: {{ show.show_time }}</p>
+
 <p>Price: ₹{{ show.price }}</p>
+
 <p>Available Seats: {{ available_seats }}</p>
 
-<h3>Book Seats</h3>
+<h3 style="text-align:center;">SCREEN</h3>
+
+<div class="screen"></div>
+
+<h3>Seat Layout</h3>
+
+<h3>Total Price: ₹<span id="total-price">0</span></h3>
 
 <form method="POST">
-    {% csrf_token %}
-    
-    <label>Number of Seats:</label>
-    <input type="number" name="seats" min="1" max="{{ available_seats }}" required>
-    
-    
-    <button type="submit">Book Now</button>
+{% csrf_token %}
+
+<div style="display:flex;flex-wrap:wrap;width:500px;">
+
+{% for seat in seats %}
+
+{% if seat.is_booked %}
+
+<div class="seat booked">
+{{ seat.seat_number }}
+</div>
+
+{% else %}
+
+<label class="seat-label">
+
+<input type="checkbox" name="selected_seats" value="{{ seat.id }}" class="seat-checkbox">
+
+<div class="seat available">
+{{ seat.seat_number }}
+</div>
+
+</label>
+
+{% endif %}
+
+{% endfor %}
+
+</div>
+
+<br>
+
+<button type="submit">Book Selected Seats</button>
+
 </form>
+
+<script>
+
+let price = {{ show.price }};
+
+document.querySelectorAll(".seat-label").forEach(label => {
+
+let checkbox = label.querySelector(".seat-checkbox");
+let seat = label.querySelector(".seat");
+
+label.addEventListener("click", function(){
+
+checkbox.checked = !checkbox.checked;
+
+if(checkbox.checked){
+seat.classList.add("selected");
+}
+else{
+seat.classList.remove("selected");
+}
+
+updatePrice();
+
+});
+
+});
+
+function updatePrice(){
+
+let selected = document.querySelectorAll(".seat-checkbox:checked").length;
+
+let total = selected * price;
+
+document.getElementById("total-price").innerText = total;
+
+}
+
+</script>
+
 </body>
 </html>

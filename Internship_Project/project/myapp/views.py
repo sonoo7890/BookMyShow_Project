@@ -1,3 +1,5 @@
+from urllib import request
+
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
@@ -14,45 +16,52 @@ def home(request):
     movies=Movie.objects.all()
     return render(request, "myapp/home.html", {"movies": movies})
 
-
 def show_detail(request, show_id):
     show = get_object_or_404(Show, id=show_id)
     available_seats = Seat.objects.filter(show=show, is_booked=False).count()
+
     if request.method == "POST":
-        seats_requested= int(request.POST.get("seats"))
+
+        # checkbox se selected seats lena
+        selected_seats = request.POST.getlist("selected_seats")
+
+        seats_requested = len(selected_seats)
 
         available_seats = Seat.objects.filter(show=show, is_booked=False).count()
-        if seats_requested <= available_seats:
-        # if seats_requested <= show.available_seats:
+
+        if seats_requested > 0 and seats_requested <= available_seats:
+
             total_amount = seats_requested * show.price
-            # show.available_seats -= seats_requested
-            # show.save()
 
-            # booking record create
-
-            # Booking.objects.create(
-            #     user=request.user, 
-            #     show=show,
-            #     seats_booked=seats_requested
-            #     )
-            booking=Booking.objects.create(
-                user=request.user, 
+            booking = Booking.objects.create(
+                user=request.user,
                 show=show,
             )
 
-            seats=Seat.objects.filter(show=show, is_booked=False)[:seats_requested]
+            seats = Seat.objects.filter(id__in=selected_seats, is_booked=False)
+
             for seat in seats:
                 seat.is_booked = True
                 seat.save()
                 booking.seats.add(seat)
-            messages.success(request,f"Booked {seats_requested} Seats booked successfully! Total amount: ₹{total_amount}")
-            return redirect("home")
-            return HttpResponse("Not enough seats available.")
-        else:
-          
-            messages.error(request, "Not enough seats available.")
-    return render(request, "myapp/show_detail.html", {"show": show,"available_seats": available_seats})
 
+            messages.success(
+                request,
+                f"Booked {seats_requested} Seats successfully! Total amount: ₹{total_amount}"
+            )
+
+            return redirect("home")
+
+        else:
+            messages.error(request, "Please select valid seats.")
+
+    seats = Seat.objects.filter(show=show)
+
+    return render(request, "myapp/show_detail.html", {
+        "show": show,
+        "available_seats": available_seats,
+        "seats": seats
+    })
 
 
 
