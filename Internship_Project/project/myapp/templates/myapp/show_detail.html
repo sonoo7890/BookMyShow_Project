@@ -1,77 +1,163 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Show Detail</title>
+{% extends 'myapp/base.html' %}
+
+{% block content %}
 
 <style>
 
-.seat{
-width:40px;
-height:40px;
-line-height:40px;
-text-align:center;
-margin:5px;
-border-radius:5px;
-display:inline-block;
+.theatre-box{
+background:white;
+padding:40px;
+border-radius:12px;
+box-shadow:0 10px 25px rgba(0,0,0,0.15);
 }
 
+/* Movie Info */
+
+.movie-info{
+background:#f8f9fa;
+padding:15px;
+border-radius:8px;
+margin-bottom:20px;
+}
+
+/* Screen */
+
+.screen{
+width:70%;
+height:30px;
+background:linear-gradient(to right,#ccc,#eee,#ccc);
+margin:30px auto;
+border-radius:20px;
+box-shadow:0 8px 20px rgba(0,0,0,0.3);
+}
+
+/* Seat Layout */
+
+.seat-layout{
+display:grid;
+grid-template-columns:repeat(10,45px);
+gap:12px;
+justify-content:center;
+margin-top:30px;
+}
+
+/* Seat */
+
+.seat{
+width:45px;
+height:45px;
+line-height:45px;
+text-align:center;
+border-radius:8px;
+font-size:13px;
+font-weight:bold;
+transition:0.2s;
+}
+
+/* Available */
+
 .available{
-background:lightgreen;
+background:#e8f7e8;
+border:2px solid #2ecc71;
 cursor:pointer;
 }
 
-.booked{
-background:red;
+.available:hover{
+background:#2ecc71;
 color:white;
+transform:scale(1.1);
 }
 
-.selected{
-background:blue;
+/* Booked */
+
+.booked{
+background:#e74c3c;
 color:white;
+border:2px solid #c0392b;
 }
+
+/* Selected */
+
+.selected{
+background:#3498db;
+color:white;
+border:2px solid #2980b9;
+}
+
+/* Hide checkbox */
 
 .seat-checkbox{
 display:none;
 }
 
-.seat-label{
-display:inline-block;
+/* Price Box */
+
+.price-box{
+background:#f8f9fa;
+padding:12px;
+border-radius:8px;
+font-weight:bold;
+font-size:18px;
 }
 
-.screen{
-width:400px;
+.legend{
+margin-top:25px;
+display:flex;
+justify-content:center;
+gap:25px;
+}
+
+.legend span{
+display:flex;
+align-items:center;
+gap:6px;
+}
+
+.legend-box{
+width:20px;
 height:20px;
-background:gray;
-margin:10px auto;
-border-radius:5px;
+border-radius:4px;
 }
 
 </style>
 
-</head>
+<div class="container mt-5 mb-5">
 
-<body>
+<div class="theatre-box">
 
-<h2>{{ show.movie.title }}</h2>
+<h3 class="text-center mb-4">{{ show.movie.title }}</h3>
 
-<p>Time: {{ show.show_time }}</p>
+<div class="row text-center movie-info">
 
-<p>Price: ₹{{ show.price }}</p>
+<div class="col-md-4">
+<strong>Time</strong><br>
+{{ show.show_time }}
+</div>
 
-<p>Available Seats: {{ available_seats }}</p>
+<div class="col-md-4">
+<strong>Price</strong><br>
+₹{{ show.price }}
+</div>
 
-<h3 style="text-align:center;">SCREEN</h3>
+<div class="col-md-4">
+<strong>Available Seats</strong><br>
+{{ available_seats }}
+</div>
+
+</div>
+
+<h5 class="text-center mt-4">SCREEN</h5>
 
 <div class="screen"></div>
 
-<h3>Seat Layout</h3>
-
-<h3>Total Price: ₹<span id="total-price">0</span></h3>
+<div class="text-center mt-3 price-box">
+Total Price: ₹<span id="total-price">0</span>
+</div>
 
 <form method="POST">
 {% csrf_token %}
 
-<div style="display:flex;flex-wrap:wrap;width:500px;">
+<div class="seat-layout mt-4">
 
 {% for seat in seats %}
 
@@ -83,7 +169,7 @@ border-radius:5px;
 
 {% else %}
 
-<label class="seat-label">
+<label>
 
 <input type="checkbox" name="selected_seats" value="{{ seat.id }}" class="seat-checkbox">
 
@@ -99,20 +185,51 @@ border-radius:5px;
 
 </div>
 
-<br>
+<div class="text-center mt-4">
 
-<button type="submit">Book Selected Seats</button>
+<button type="submit" class="btn btn-success btn-lg">
+Book Selected Seats
+</button>
+
+</div>
 
 </form>
+
+<!-- Seat Legend -->
+
+<div class="legend">
+
+<span>
+<div class="legend-box" style="background:#e8f7e8;border:2px solid #2ecc71;"></div>
+Available
+</span>
+
+<span>
+<div class="legend-box" style="background:#3498db;"></div>
+Selected
+</span>
+
+<span>
+<div class="legend-box" style="background:#e74c3c;"></div>
+Booked
+</span>
+
+</div>
+
+</div>
+
+</div>
 
 <script>
 
 let price = {{ show.price }};
 
-document.querySelectorAll(".seat-label").forEach(label => {
+document.querySelectorAll("label").forEach(label => {
 
 let checkbox = label.querySelector(".seat-checkbox");
 let seat = label.querySelector(".seat");
+
+if(!checkbox) return;
 
 label.addEventListener("click", function(){
 
@@ -143,5 +260,4 @@ document.getElementById("total-price").innerText = total;
 
 </script>
 
-</body>
-</html>
+{% endblock %}

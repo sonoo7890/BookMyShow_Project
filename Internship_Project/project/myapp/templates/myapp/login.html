@@ -1,27 +1,110 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Login</title>
-</head>
-<body>
+{% extends 'myapp/base.html' %}
+{% load static %}
 
-    <h2>Login Page</h2>
+{% block content %}
 
-    {% if form.errors %}
-        <p style="color:red;">Invalid username or password</p>
-    {% endif %}
+<style>
 
-    <form method="post">
-        {% csrf_token %}
-        
-        <label>Username:</label><br>
-        {{ form.username }}<br><br>
+/* Full screen background */
 
-        <label>Password:</label><br>
-        {{ form.password }}<br><br>
+.login-page{
+background-image:url("{% static 'images/banner1.jpg' %}");
+background-size:cover;
+background-position:center;
+min-height:100vh;
+width:100vw;
+display:flex;
+justify-content:center;
+align-items:center;
+}
 
-        <button type="submit">Login</button>
-    </form>
+.container{
+max-width:100%;
+padding:0;
+}
 
-</body>
-</html>
+/* Dark overlay */
+
+.overlay{
+background:rgba(0,0,0,0.65);
+width:100%;
+height:100%;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+/* Login Card */
+
+.login-card{
+width:420px;
+background:white;
+padding:40px;
+border-radius:10px;
+box-shadow:0 10px 30px rgba(0,0,0,0.4);
+}
+
+/* Title */
+
+.login-title{
+text-align:center;
+margin-bottom:25px;
+font-weight:bold;
+}
+
+/* Button */
+
+.login-btn{
+width:100%;
+padding:10px;
+font-weight:bold;
+}
+
+</style>
+
+<div class="login-page">
+
+<div class="overlay">
+
+<div class="login-card">
+
+<h3 class="login-title">Login</h3>
+
+{% if form.errors %}
+
+<div class="alert alert-danger">
+Invalid username or password
+</div>
+{% endif %}
+
+<form method="post">
+{% csrf_token %}
+
+<div class="mb-3">
+<label class="form-label">Username</label>
+{{ form.username }}
+</div>
+
+<div class="mb-3">
+<label class="form-label">Password</label>
+{{ form.password }}
+</div>
+
+<button type="submit" class="btn btn-danger login-btn">
+Login
+</button>
+
+</form>
+
+<p class="text-center mt-3">
+Don't have an account?
+<a href="#">Signup</a>
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+{% endblock %}
