@@ -137,17 +137,27 @@ color:#888;
 {% if user.is_authenticated %}
 
 <li class="nav-item ms-2">
-<a class="nav-link logout-btn" href="{% url 'logout' %}">
+
+<form action="{% url 'logout' %}" method="post">
+
+{% csrf_token %}
+
+<button type="submit" class="btn btn-secondary btn-sm logout-btn">
 Logout
-</a>
+</button>
+
+</form>
+
 </li>
 
 {% else %}
 
 <li class="nav-item ms-2">
-<a class="nav-link login-btn" href="{% url 'login' %}">
+
+<a class="btn btn-danger btn-sm login-btn" href="{% url 'login' %}">
 Login
 </a>
+
 </li>
 
 {% endif %}
