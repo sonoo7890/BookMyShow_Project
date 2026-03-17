@@ -105,19 +105,7 @@ def admin_check(user):
 def add_movie(request):
    return render(request, "myapp/add_movie.html")
 
-from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib import messages
 
 
-def signup(request):
-    if request.method == "POST":
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, "Account created successfully! Please login.")
-            return redirect("login")
-    else:
-        form = UserCreationForm()
 
-    return render(request, "myapp/signup.html", {"form": form})
+   
