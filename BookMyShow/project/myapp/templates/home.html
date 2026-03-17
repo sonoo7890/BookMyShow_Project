@@ -1,24 +1,43 @@
-<!DOCTYPE html>
-<html>
+<html lang="en-IN">
 <head>
-    <title>BookMyShow</title>
+<title>Movie Tickets, Plays, Sports, Events & Cinemas nearby - BookMyShow</title>
+
+<meta name="description" content="BookMyShow offers showtimes, movie tickets, reviews, trailers, concert tickets and events near Mumbai. Also features promotional offers, coupons and mobile app.">
+
+<meta name="keywords" content="Ticket Booking Movies, Movie Tickets, Big Cinema, Ags, Inox, Movie Online Booking, Concert, Play, Event, Comedy Show Tickets, IPL, PVR Cinemas, T20 Tickets, Online Movie Ticket, Movie Trailers, Reviews.">
+
+<meta name="color-scheme" content="light only">
+
+<link rel="canonical" href="https://in.bookmyshow.com/explore/home">
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+<meta name="apple-mobile-web-app-status-bar-style" content="white">
+<meta name="apple-mobile-web-app-title" content="BookMyShow">
+
+<meta name="theme-color" content="#FFFFFF">
+
+<meta content="156665113451029" property="fb:app_id">
+
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+
+<meta property="og:site_name" content="BookMyShow">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="BookMyShow">
+
+<meta property="og:title" content="Movie Tickets, Plays, Sports, Events & Cinemas nearby - BookMyShow">
+
+<meta property="og:description" content="BookMyShow offers showtimes, movie tickets, reviews, trailers, concert tickets and events near Mumbai. Also features promotional offers, coupons and mobile app.">
+
+<meta property="og:type" content="website">
+
+<meta property="og:image" content="https://in.bmscdn.com/bmsin/new/BMS_logo_new.png">
+
 </head>
-<body>
-
-<h1>Welcome to the BookMyShow App!</h1>
-
-<h2>Available Movies</h2>
-
-{% for movie in movies %}
-    <div>
-        <h3>{{ movie.title }}</h3>
-        <p>{{ movie.description }}</p>
-        <p>Release Date: {{ movie.release_date }}</p>
-        <hr>
-    </div>
-{% empty %}
-    <p>No movies available.</p>
-{% endfor %}
-
-</body>
 </html>
