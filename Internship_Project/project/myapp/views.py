@@ -108,4 +108,22 @@ def add_movie(request):
 
 
 
+from django.shortcuts import render, redirect
+from .forms import CustomUserCreationForm
+from django.contrib import messages
+
+
+def signup(request):
+    if request.method == "POST":
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Account created successfully! Please login.")
+            return redirect("login")
+    else:
+        form = CustomUserCreationForm()
+
+    return render(request, "myapp/signup.html", {"form": form})
+
+
    

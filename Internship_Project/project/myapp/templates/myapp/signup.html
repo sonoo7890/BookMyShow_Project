@@ -1,6 +1,121 @@
 {% extends 'myapp/base.html' %}
 
 {% block content %}
+<style>
+
+body{
+margin:0;
+min-height:100vh;
+position:relative;
+font-family:sans-serif;
+}
+
+/* Background Image */
+
+body::before{
+content:"";
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:url("https://images.unsplash.com/photo-1497032205916-ac775f0649ae") center/cover no-repeat;
+filter:blur(5px);
+transform:scale(1.05);
+z-index:-2;
+}
+
+/* Dark overlay */
+
+body::after{
+content:"";
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.5);
+z-index:-1;
+}
+
+/* Card styling */
+
+.card{
+border:none;
+border-radius:15px;
+background:rgba(255,255,255,0.95);
+backdrop-filter:blur(10px);
+}
+
+/* Heading */
+
+h3{
+font-weight:bold;
+color:#2c3e50;
+}
+
+/* Input fields */
+
+input{
+width:100%;
+padding:10px;
+border-radius:8px;
+border:1px solid #ccc;
+outline:none;
+transition:0.3s;
+}
+
+input:focus{
+border-color:#28a745;
+box-shadow:0 0 5px rgba(40,167,69,0.5);
+}
+
+/* Button */
+
+.btn-success{
+background:#28a745;
+border:none;
+border-radius:8px;
+padding:10px;
+font-weight:bold;
+transition:0.3s;
+}
+
+.btn-success:hover{
+background:#218838;
+}
+
+/* Error Styling */
+
+ul.errorlist{
+list-style:none;
+padding:0;
+margin-bottom:10px;
+}
+
+ul.errorlist li{
+color:#e74c3c;
+background:#fdecea;
+padding:8px;
+border-radius:6px;
+font-size:14px;
+margin-bottom:5px;
+border-left:4px solid #e74c3c;
+}
+
+/* Link */
+
+a{
+text-decoration:none;
+color:#007bff;
+font-weight:500;
+}
+
+a:hover{
+text-decoration:underline;
+}
+
+</style>
 
 <div class="container mt-5">
 
@@ -14,6 +129,8 @@
 
 <form method="post">
 {% csrf_token %}
+
+{{ form.errors }}
 
 <div class="mb-3">
 <label class="form-label">Username</label>
@@ -33,6 +150,7 @@
 <button type="submit" class="btn btn-success w-100">
 Signup
 </button>
+
 
 </form>
 
