@@ -1,18 +1,21 @@
 {% extends 'myapp/base.html' %}
 
 {% block content %}
+
 <style>
 
-body{
-margin:0;
+/* Background */
+
+.signup-bg{
 min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
 position:relative;
-font-family:sans-serif;
+font-family:'Segoe UI',sans-serif;
 }
 
-/* Background Image */
-
-body::before{
+.signup-bg::before{
 content:"";
 position:fixed;
 top:0;
@@ -20,72 +23,89 @@ left:0;
 width:100%;
 height:100%;
 background:url("https://images.unsplash.com/photo-1497032205916-ac775f0649ae") center/cover no-repeat;
-filter:blur(5px);
-transform:scale(1.05);
+filter:blur(6px);
+transform:scale(1.1);
 z-index:-2;
+animation:bgZoom 20s infinite alternate ease-in-out;
 }
 
-/* Dark overlay */
+@keyframes bgZoom{
+0%{transform:scale(1.05);}
+100%{transform:scale(1.15);}
+}
 
-body::after{
+.signup-bg::after{
 content:"";
 position:fixed;
 top:0;
 left:0;
 width:100%;
 height:100%;
-background:rgba(0,0,0,0.5);
+background:rgba(0,0,0,0.6);
 z-index:-1;
 }
 
-/* Card styling */
+/* Card */
 
-.card{
-border:none;
-border-radius:15px;
-background:rgba(255,255,255,0.95);
-backdrop-filter:blur(10px);
+.signup-card{
+width:400px;
+border-radius:18px;
+padding:35px;
+background:rgba(255,255,255,0.15);
+backdrop-filter:blur(18px);
+box-shadow:0 10px 35px rgba(0,0,0,0.5);
+color:white;
+animation:fadeIn 1s ease;
 }
 
-/* Heading */
-
-h3{
-font-weight:bold;
-color:#2c3e50;
+@keyframes fadeIn{
+from{
+opacity:0;
+transform:translateY(40px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
 }
 
-/* Input fields */
+/* Inputs */
 
-input{
+.signup-card input{
 width:100%;
-padding:10px;
-border-radius:8px;
-border:1px solid #ccc;
-outline:none;
-transition:0.3s;
+padding:12px;
+border-radius:10px;
+border:none;
+margin-top:5px;
+margin-bottom:15px;
+background:rgba(255,255,255,0.25);
+color:white;
 }
 
-input:focus{
-border-color:#28a745;
-box-shadow:0 0 5px rgba(40,167,69,0.5);
+.signup-card input:focus{
+outline:none;
+box-shadow:0 0 8px #28a745;
 }
 
 /* Button */
 
-.btn-success{
-background:#28a745;
+.signup-btn{
+width:100%;
+padding:12px;
 border:none;
-border-radius:8px;
-padding:10px;
+border-radius:10px;
+background:linear-gradient(45deg,#28a745,#5ddf7a);
 font-weight:bold;
+color:white;
 transition:0.3s;
 }
 
-.btn-success:hover{
-background:#218838;
+.signup-btn:hover{
+transform:scale(1.05);
+box-shadow:0 5px 20px rgba(40,167,69,0.6);
 }
 
-/* Error Styling */
+/* Errors */
 
 ul.errorlist{
 list-style:none;
@@ -94,36 +114,18 @@ margin-bottom:10px;
 }
 
 ul.errorlist li{
-color:#e74c3c;
-background:#fdecea;
+background:rgba(255,0,0,0.25);
 padding:8px;
 border-radius:6px;
-font-size:14px;
 margin-bottom:5px;
-border-left:4px solid #e74c3c;
-}
-
-/* Link */
-
-a{
-text-decoration:none;
-color:#007bff;
-font-weight:500;
-}
-
-a:hover{
-text-decoration:underline;
 }
 
 </style>
 
-<div class="container mt-5">
 
-<div class="row justify-content-center">
+<div class="signup-bg">
 
-<div class="col-md-5">
-
-<div class="card shadow-lg p-4">
+<div class="signup-card">
 
 <h3 class="text-center mb-4">Create Account</h3>
 
@@ -132,36 +134,25 @@ text-decoration:underline;
 
 {{ form.errors }}
 
-<div class="mb-3">
-<label class="form-label">Username</label>
+<label>Username</label>
 {{ form.username }}
-</div>
 
-<div class="mb-3">
-<label class="form-label">Password</label>
+<label>Password</label>
 {{ form.password1 }}
-</div>
 
-<div class="mb-3">
-<label class="form-label">Confirm Password</label>
+<label>Confirm Password</label>
 {{ form.password2 }}
-</div>
 
-<button type="submit" class="btn btn-success w-100">
+<button type="submit" class="signup-btn">
 Signup
 </button>
-
 
 </form>
 
 <p class="text-center mt-3">
 Already have an account?
-<a href="{% url 'login' %}">Login</a>
+<a href="{% url 'login' %}" style="color:#7ed6ff;">Login</a>
 </p>
-
-</div>
-
-</div>
 
 </div>
 

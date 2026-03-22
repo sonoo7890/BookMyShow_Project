@@ -5,28 +5,30 @@
 
 <style>
 
-/* Full screen background */
+/* Login Page Background */
 
 .login-page{
-background-image:url("{% static 'images/banner1.jpg' %}");
+background:linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)),
+url("https://images.unsplash.com/photo-1489599849927-2ee91cede3ba");
 background-size:cover;
 background-position:center;
-min-height:100vh;
-width:100vw;
+min-height:80vh;
+width:80vw;
 display:flex;
 justify-content:center;
 align-items:center;
+animation:bgMove 25s infinite alternate;
+background-position:left center;
 }
 
-.container{
-max-width:100%;
-padding:0;
+@keyframes bgMove{
+0%{background-position:center;}
+100%{background-position:top;}
 }
 
-/* Dark overlay */
+/* Dark overlay container */
 
 .overlay{
-background:rgba(0,0,0,0.65);
 width:100%;
 height:100%;
 display:flex;
@@ -38,10 +40,25 @@ align-items:center;
 
 .login-card{
 width:420px;
-background:white;
+background:rgba(0,0,0,0.85);
 padding:40px;
-border-radius:10px;
-box-shadow:0 10px 30px rgba(0,0,0,0.4);
+border-radius:12px;
+box-shadow:0 15px 35px rgba(0,0,0,0.6);
+color:white;
+backdrop-filter:blur(8px);
+margin:auto;
+animation:fadeUp 1s ease;
+}
+
+@keyframes fadeUp{
+from{
+opacity:0;
+transform:translateY(40px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
 }
 
 /* Title */
@@ -50,14 +67,66 @@ box-shadow:0 10px 30px rgba(0,0,0,0.4);
 text-align:center;
 margin-bottom:25px;
 font-weight:bold;
+font-size:26px;
+letter-spacing:1px;
+}
+
+/* Inputs */
+
+.login-card input{
+width:100%;
+padding:12px;
+border-radius:8px;
+border:none;
+margin-bottom:15px;
+background:rgba(255,255,255,0.15);
+color:white;
+transition:0.3s;
+}
+
+.login-card input::placeholder{
+color:#ccc;
+}
+
+.login-card input:focus{
+outline:none;
+background:rgba(255,255,255,0.25);
+box-shadow:0 0 8px #ff4b5c;
 }
 
 /* Button */
 
 .login-btn{
 width:100%;
-padding:10px;
+padding:12px;
 font-weight:bold;
+border:none;
+border-radius:8px;
+background:linear-gradient(45deg,#ff4b5c,#ff1e3c);
+color:white;
+transition:0.3s;
+}
+
+.login-btn:hover{
+transform:scale(1.05);
+box-shadow:0 5px 20px rgba(255,75,92,0.6);
+}
+
+/* Signup Link */
+
+.signup-link{
+text-align:center;
+margin-top:15px;
+font-size:14px;
+}
+
+.signup-link a{
+color:#ff4b5c;
+font-weight:bold;
+}
+
+.signup-link a:hover{
+text-decoration:underline;
 }
 
 </style>

@@ -10,12 +10,16 @@ from django.contrib.auth.decorators import login_required
 from .models import Booking,Seat
 from django.contrib.auth.decorators import user_passes_test
 from django.core.exceptions import PermissionDenied
+from django.shortcuts import render, redirect
+from .forms import CustomUserCreationForm
+from django.contrib import messages
 # Create your views here.
 
 def home(request):
     movies=Movie.objects.all()
     return render(request, "myapp/home.html", {"movies": movies})
 
+@login_required(login_url="login")
 def show_detail(request, show_id):
     show = get_object_or_404(Show, id=show_id)
     available_seats = Seat.objects.filter(show=show, is_booked=False).count()
@@ -108,9 +112,7 @@ def add_movie(request):
 
 
 
-from django.shortcuts import render, redirect
-from .forms import CustomUserCreationForm
-from django.contrib import messages
+
 
 
 def signup(request):
